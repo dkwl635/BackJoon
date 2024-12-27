@@ -1,5 +1,4 @@
 #include <iostream>
-#include <map>
 using namespace std;
 
 int main()
@@ -7,8 +6,7 @@ int main()
 	string str;
 	
 	cin >> str;
-	map<char ,int> Alphabet;
-
+	int arr[26] = { 0, };
 	
 	for (int i = 0; i < str.size(); i++)
 	{
@@ -17,33 +15,27 @@ int main()
 		{
 			C -= 32;
 		}
+		C -= 65;
 
-		if (Alphabet.find(C) == Alphabet.end())
-		{
-			Alphabet.insert(pair<char, int>(C , 1));
-		}
-		else
-		{
-			Alphabet[C]++;
-		}
+		arr[C] = arr[C] + 1;
 		
 	}
 
 	int Size = 0;
 	char Answer = ' ';
-	
-	for (map<char , int>::iterator iter = Alphabet.begin();  iter != Alphabet.end() ;  iter++)
+	for (int i = 0; i < 26; i++)
 	{
-		if (iter->second > Size)
+		if (arr[i]> Size)
 		{
-			Answer = iter->first;
-			Size = iter->second;
+			Answer = i + 65;
+			Size = arr[i];
 		}
-		else if(iter->second == Size)
+		else if (arr[i] == Size)
 		{
 			Answer = '?';
 		}
 	}
+
 
 
 	cout << Answer;
