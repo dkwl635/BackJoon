@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 #include <map>
-
+#include <algorithm> 
 
 using namespace std;
 
@@ -22,7 +22,11 @@ int solution(int k, vector<int> tangerine) {
         SizeCount.push_back(x.second);
     }
     
-    for(int i = 0; i < SizeCount.size(); i++)
+    sort(SizeCount.begin(), SizeCount.end(), std::greater<int>());
+   
+    //한번 사용해본 버블 정렬
+    /*
+        for(int i = 0; i < SizeCount.size(); i++)
     {
         for(int j = 0 ; j < SizeCount.size() - i - 1; j++)
         {
@@ -34,6 +38,7 @@ int solution(int k, vector<int> tangerine) {
             }
         }
     }
+    */
   
     int i = 0;
     while(k > 0)
