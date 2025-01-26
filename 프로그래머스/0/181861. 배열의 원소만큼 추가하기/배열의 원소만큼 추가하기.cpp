@@ -6,6 +6,8 @@ using namespace std;
 vector<int> solution(vector<int> arr) {
   
     
+    
+    
     int size = 0;
     for(int x : arr){size += x;}
     
