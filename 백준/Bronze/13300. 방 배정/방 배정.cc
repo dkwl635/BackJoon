@@ -26,10 +26,12 @@ int main()
     for (int i = 1; i <= 6; i++)
     {
         int woman = student[i][0];
-        int man = student[i][1];
+        if (woman > 0)
+            needRoom += woman / k + ((woman % k > 0) ? 1 : 0);
 
-        needRoom += woman / k + woman % k;
-        needRoom += man / k + man % k;
+        int man = student[i][1];
+        if (man)
+            needRoom += man / k + ((man % k > 0) ? 1 : 0);
     }
 
     cout << needRoom;
