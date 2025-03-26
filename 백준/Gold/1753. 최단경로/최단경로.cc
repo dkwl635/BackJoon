@@ -5,70 +5,57 @@
 
 using namespace std;
 
-int N, M , S;
-int v1, v2, c;
-vector<vector<pair<int, int>>> graph;
-vector<int> dist;
+const int INF = INT_MAX;
+int N, M, S;
+vector<pair<int, int>> graph[20001]; // 정적 배열 사용
+int dist[20001]; // 최단 거리 배열
 
-void dijkstra()
-{
-	//priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-	//비교할 코스트를 먼저 퍼스트 지정한다
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
-	//페어 ( 코스트 , 노드 )
-	pq.push({ 0,S });
-	dist[S] = 0;
-	while (!pq.empty())
-	{
-		int cost = pq.top().first;
-		int node = pq.top().second;
-		pq.pop();
-		if (cost > dist[node]) continue;
-	
-		for (auto& neighborNode : graph[node])
-		{
-			int nextNode = neighborNode.first;
-			int nextCost = neighborNode.second + dist[node];
-			
-			if (nextCost < dist[nextNode])
-			{
-				dist[nextNode] = nextCost;
-				pq.push({ nextCost,nextNode });
-			}
-		}
+void dijkstra() {
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+    pq.push({0, S});
+    dist[S] = 0;
 
-	}
+    while (!pq.empty()) {
+        auto [cost, node] = pq.top();
+        pq.pop();
 
-	return;
+        // 현재 경로가 더 크면 무시 (이미 처리됨)
+        if (cost > dist[node]) continue;
+
+        // 현재 노드와 연결된 모든 간선 확인
+        for (const auto& [nextNode, weight] : graph[node]) {
+            int nextCost = weight + dist[node];
+
+            if (nextCost < dist[nextNode]) {
+                dist[nextNode] = nextCost;
+                pq.push({nextCost, nextNode});
+            }
+        }
+    }
 }
 
-int main()
-{
-	ios::sync_with_stdio(false);
-	cin.tie(0);
-    cout.tie(0);
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
-	cin >> N >> M;
-	cin >> S;
+    cin >> N >> M >> S;
 
-	graph = vector<vector<pair<int, int>>>(N + 1);
-	dist = vector<int>(N + 1, INT_MAX);
+    fill(dist, dist + N + 1, INF); // 거리 배열 초기화
 
-	for (int i = 0; i < M; ++i)
-	{
-		cin >> v1 >> v2 >> c;
-		graph[v1].push_back({ v2 , c });
-	}
+    for (int i = 0; i < M; ++i) {
+        int v1, v2, c;
+        cin >> v1 >> v2 >> c;
+        graph[v1].push_back({v2, c});
+    }
 
-	dijkstra();
-	for (int i = 1; i <= N; i++)
-	{
-		if (dist[i] == INT_MAX)
-			cout << "INF" << endl;
-		else
-			cout << dist[i] << endl;
-	}
+    dijkstra();
 
+    for (int i = 1; i <= N; i++) {
+        if (dist[i] == INF)
+            cout << "INF\n";
+        else
+            cout << dist[i] << "\n";
+    }
 
-	return 0;
+    return 0;
 }
