@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<vector<int>> map;
+vector<vector<bool>> map;
 vector<vector<bool>> visited;
 int n, m;
 int maxSize;
@@ -16,7 +16,7 @@ void DFS(int x , int y , int& size)
 	if ((x < 0 || x >= n) || (y < 0 || y >= m)) return;
 	if (visited[x][y] == true) return;
 	visited[x][y] = true;
-	if (map[x][y] == 0)return;
+	if (map[x][y] == false)return;
 
 	size = size + 1;
 
@@ -38,13 +38,15 @@ int main()
 	
 	cin >> n >> m;
 
-	map = vector<vector<int>>(n, vector<int>(m,0));
+	map = vector<vector<bool>>(n, vector<bool>(m,false));
 	visited = vector<vector<bool>>(n, vector<bool>(m,false));
 
 	for(int i = 0; i < n ; ++i)
 		for (int j = 0; j < m; ++j)
 		{
-			cin >> map[i][j];
+			bool isPicture = false;
+			cin >> isPicture;
+			map[i][j] = isPicture;
 		}
 
 
