@@ -4,32 +4,7 @@
 using namespace std;
 
 int N, result;
-vector<pair<int, int >> v;
 vector<int> cost;
-
-void DP()
-{
-	result = 0;
-	cost[0] = 0;
-	for (int i = 1; i <= N; ++i)
-	{
-		cost[i] = max(cost[i], cost[i - 1]);
-
-		int resultDay = i + v[i].first - 1;
-
-		if (resultDay > N) continue;
-	
-	
-		int CostA = cost[resultDay];
-		int CostB = cost[i - 1] + v[i].second;
-		
-		cost[resultDay] = max(CostA, CostB);
-
-		result = max(result, cost[resultDay]);
-	}
-
-
-}
 
 int main()
 {
@@ -39,16 +14,29 @@ int main()
 
 	cin >> N;
 
-	v = vector<pair<int, int >>(N + 1);
 	cost = vector<int>(N + 1, 0);
 
+	result = 0;
+	cost[0] = 0;
+	int Day, AddCost;
 	for (int i = 1; i <= N; ++i)
 	{
-		int a, b;
-		cin >> v[i].first >> v[i].second;
+		cin >> Day >> AddCost;
+
+		cost[i] = max(cost[i], cost[i - 1]);
+
+		int resultDay = i + Day - 1;
+
+		if (resultDay > N) continue;
+
+		int CostA = cost[resultDay];
+		int CostB = cost[i - 1] + AddCost;
+
+		cost[resultDay] = max(CostA, CostB);
+
+		result = max(result, cost[resultDay]);
 	}
 
-	DP();
 
 	//for (int i = 1; i <= N; ++i)
 	//{
